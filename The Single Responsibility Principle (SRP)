@@ -1,49 +1,93 @@
-//This class will maintain Single Responsibility Principle(SRP)
+//*************************************************************************
+// Title : Java Program Demonstrating Single Responsibility Principle
+// Author : Razu Sarder, Undergraduate Student, Khulna University
+//*************************************************************************
 
-// Class representing a cricket player
-class CricketPlayer {
+/**
+ * This class represents a simple Student.
+ */
+class Student {
     private String name;
     private int age;
-    private String team;
+    private String course;
 
-    // Constructor
-    public CricketPlayer(String name, int age, String team) {
+    /**
+     * Constructs a new Student object with the given name, age, and course.
+     *
+     * @param name   The name of the student.
+     * @param age    The age of the student.
+     * @param course The course the student is enrolled in.
+     */
+    public Student(String name, int age, String course) {
         this.name = name;
         this.age = age;
-        this.team = team;
+        this.course = course;
     }
 
-    // Getters and setters
+    /**
+     * Retrieves the name of the student.
+     *
+     * @return The name of the student.
+     */
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
+    /**
+     * Retrieves the age of the student.
+     *
+     * @return The age of the student.
+     */
     public int getAge() {
         return age;
     }
 
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public String getTeam() {
-        return team;
-    }
-
-    public void setTeam(String team) {
-        this.team = team;
+    /**
+     * Retrieves the course the student is enrolled in.
+     *
+     * @return The course the student is enrolled in.
+     */
+    public String getCourse() {
+        return course;
     }
 }
 
-// Class responsible for displaying player information
-class PlayerInfoDisplayer {
-    public void displayPlayerInfo(CricketPlayer player) {
-        System.out.println("Name: " + player.getName());
-        System.out.println("Age: " + player.getAge());
-        System.out.println("Team: " + player.getTeam());
+/**
+ * This class represents a simple StudentManagementSystem.
+ */
+class StudentManagementSystem {
+
+    /**
+     * Prints the details of a student.
+     *
+     * @param student The student whose details to print.
+     */
+    public void printStudentDetails(Student student) {
+        System.out.println("Student Details:");
+        System.out.println("Name: " + student.getName());
+        System.out.println("Age: " + student.getAge());
+        System.out.println("Course: " + student.getCourse());
     }
 }
+
+/**
+ * This class demonstrates the usage of Student and StudentManagementSystem classes.
+ */
+class SchoolDemo {
+    public static void main(String[] args) {
+        // Create a student
+        Student student = new Student("Nayon", 21, "Computer Science");
+
+        // Enroll the student in a course using StudentManagementSystem
+        StudentManagementSystem sms = new StudentManagementSystem();
+
+        // Print student details using StudentManagementSystem
+        sms.printStudentDetails(student);
+    }
+}
+
+/**
+ * In the above program, it's evident that the Student class solely focuses on storing student attributes,
+ * while the StudentManagementSystem class is responsible for printing student details. This adheres to
+ * the Single Responsibility Principle.
+ */
