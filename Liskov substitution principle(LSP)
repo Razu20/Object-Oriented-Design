@@ -1,123 +1,99 @@
+//***********************************************************************
+// Title : Java Program Demonstrating Liskov Substitution Principle
+// Author : Nayon Mondol, Undergraduate Student, Khulna University
+//***********************************************************************
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * Player.java
- * 
- * Abstract base class representing a player in cricket.
+ * Interface representing a geometric shape.
  */
-public abstract class Player {
-    private String name;
-    private int age;
-
+interface Shape {
     /**
-     * Constructor for Player class.
-     * 
-     * @param name The name of the player.
-     * @param age  The age of the player.
+     * Calculates the area of the shape.
+     *
+     * @return The area of the shape.
      */
-    public Player(String name, int age) {
-        this.name = name;
-        this.age = age;
-    }
-
-    /**
-     * Get the name of the player.
-     * 
-     * @return The name of the player.
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * Get the age of the player.
-     * 
-     * @return The age of the player.
-     */
-    public int getAge() {
-        return age;
-    }
-
-    /**
-     * Abstract method representing the action of playing, to be implemented by subclasses.
-     */
-    public abstract void play();
+    double calculateArea();
 }
 
 /**
- * Batsman.java
- * 
- * Class representing a batsman player in cricket, extending the Player class.
+ * Class representing a rectangle.
  */
-public class Batsman extends Player {
-    private int runsScored;
+class Rectangle implements Shape {
+    private double width;
+    private double height;
 
     /**
-     * Constructor for Batsman class.
-     * 
-     * @param name       The name of the batsman.
-     * @param age        The age of the batsman.
-     * @param runsScored The runs scored by the batsman.
+     * Constructs a new Rectangle object with the given width and height.
+     *
+     * @param width  The width of the rectangle.
+     * @param height The height of the rectangle.
      */
-    public Batsman(String name, int age, int runsScored) {
-        super(name, age);
-        this.runsScored = runsScored;
+    public Rectangle(double width, double height) {
+        this.width = width;
+        this.height = height;
     }
 
-    /**
-     * Get the runs scored by the batsman.
-     * 
-     * @return The runs scored by the batsman.
-     */
-    public int getRunsScored() {
-        return runsScored;
-    }
-
-    /**
-     * Implementation of the play method for batsman.
-     */
     @Override
-    public void play() {
-        System.out.println(getName() + " is batting.");
+    public double calculateArea() {
+        return width * height;
     }
 }
 
 /**
- * Bowler.java
- * 
- * Class representing a bowler player in cricket, extending the Player class.
+ * Class representing a square, which is a special case of a rectangle.
  */
-public class Bowler extends Player {
-    private int wicketsTaken;
+class Square implements Shape {
+    private double side;
 
     /**
-     * Constructor for Bowler class.
-     * 
-     * @param name         The name of the bowler.
-     * @param age          The age of the bowler.
-     * @param wicketsTaken The wickets taken by the bowler.
+     * Constructs a new Square object with the given side length.
+     *
+     * @param side The side length of the square.
      */
-    public Bowler(String name, int age, int wicketsTaken) {
-        super(name, age);
-        this.wicketsTaken = wicketsTaken;
+    public Square(double side) {
+        this.side = side;
     }
 
-    /**
-     * Get the wickets taken by the bowler.
-     * 
-     * @return The wickets taken by the bowler.
-     */
-    public int getWicketsTaken() {
-        return wicketsTaken;
-    }
-
-    /**
-     * Implementation of the play method for bowler.
-     */
     @Override
-    public void play() {
-        System.out.println(getName() + " is bowling.");
+    public double calculateArea() {
+        return side * side;
     }
 }
 
- *In this example, the Player class is a base class for different types of players in cricket.
-Each subclass (Batsman and Bowler) can be substituted for 
-the Player class without affecting the correctness of the program.*/
+/**
+ * Demo class demonstrating the usage of shapes and the Liskov Substitution Principle.
+ */
+class LiskovSubstitutionPrincipleDemo {
+    /**
+     * Calculates the total area of shapes and prints it.
+     *
+     * @param shapes The list of shapes.
+     */
+    public static void calculateTotalArea(List<Shape> shapes) {
+        double totalArea = 0;
+        for (Shape shape : shapes) {
+            totalArea += shape.calculateArea();
+        }
+        System.out.println("Total area of shapes: " + totalArea);
+    }
+
+    public static void main(String[] args) {
+        // Create a list of shapes
+        List<Shape> shapes = new ArrayList<>();
+        shapes.add(new Rectangle(5, 4));
+        shapes.add(new Square(3));
+
+        // Calculate and print the total area of shapes
+        calculateTotalArea(shapes);
+    }
+}
+
+/**
+ * The Square class is a subtype of Rectangle. We can substitute
+ * a Square object for a Rectangle object without affecting the correctness
+ * of the program. This adherence to the Liskov Substitution Principle
+ * ensures the program's robustness and extensibility.
+ */   
