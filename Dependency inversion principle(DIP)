@@ -1,114 +1,94 @@
+//************************************************************************
+// Title : Java Program Demonstrating Dependency Inversion Principle
+// Author : Razu Sarder, Undergraduate Student, Khulna University
+//************************************************************************
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * Player.java
- * 
- * Interface representing a player in cricket.
+ * Interface representing a notification method.
  */
-public interface Player {
-    String getName();
-    int getAge();
-    void play();
+interface NotificationMethod {
+    /**
+     * Sends a notification.
+     *
+     * @param message The message to be sent.
+     */
+    void sendNotification(String message);
 }
 
 /**
- * CricketMatch.java
- * 
- * Class representing a cricket match, adhering to the Dependency Inversion Principle.
+ * Class representing a notification system.
  */
-public class CricketMatch {
-    private Player batsman;
-    private Player bowler;
+class NotificationSystem {
+    private final List<NotificationMethod> notificationMethods;
 
     /**
-     * Constructor for CricketMatch class.
-     * 
-     * @param batsman The batsman player participating in the match.
-     * @param bowler  The bowler player participating in the match.
+     * Constructs a new NotificationSystem with the given notification methods.
+     *
+     * @param notificationMethods The list of notification methods.
      */
-    public CricketMatch(Player batsman, Player bowler) {
-        this.batsman = batsman;
-        this.bowler = bowler;
+    public NotificationSystem(List<NotificationMethod> notificationMethods) {
+        this.notificationMethods = notificationMethods;
     }
 
     /**
-     * Method to start the cricket match.
+     * Sends a notification using all the configured notification methods.
+     *
+     * @param message The message to be sent.
      */
-    public void startMatch() {
-        System.out.println("Match starts!");
-        batsman.play();
-        bowler.play();
-        System.out.println("Match ends!");
+    public void sendNotification(String message) {
+        for (NotificationMethod method : notificationMethods) {
+            method.sendNotification(message);
+        }
     }
 }
 
 /**
- * Batsman.java
- * 
- * Class representing a batsman player in cricket, implementing the Player interface.
+ * Class representing an email notification method.
  */
-public class Batsman implements Player {
-    private String name;
-    private int age;
-    private int runsScored;
-
-    /**
-     * Constructor for Batsman class.
-     * 
-     * @param name       The name of the batsman.
-     * @param age        The age of the batsman.
-     * @param runsScored The runs scored by the batsman.
-     */
-    public Batsman(String name, int age, int runsScored) {
-        this.name = name;
-        this.age = age;
-        this.runsScored = runsScored;
-    }
-
-    // Getters for name, age, and runs scored omitted for brevity
-
-    /**
-     * Implementation of the play method for batsman.
-     */
+class EmailNotification implements NotificationMethod {
     @Override
-    public void play() {
-        System.out.println(name + " is batting.");
+    public void sendNotification(String message) {
+        System.out.println("Sending email notification: " + message);
     }
 }
 
 /**
- * Bowler.java
- * 
- * Class representing a bowler player in cricket, implementing the Player interface.
+ * Class representing a SMS notification method.
  */
-public class Bowler implements Player {
-    private String name;
-    private int age;
-    private int wicketsTaken;
-
-    /**
-     * Constructor for Bowler class.
-     * 
-     * @param name         The name of the bowler.
-     * @param age          The age of the bowler.
-     * @param wicketsTaken The wickets taken by the bowler.
-     */
-    public Bowler(String name, int age, int wicketsTaken) {
-        this.name = name;
-        this.age = age;
-        this.wicketsTaken = wicketsTaken;
-    }
-
-    // Getters for name, age, and wickets taken omitted for brevity
-
-    /**
-     * Implementation of the play method for bowler.
-     */
+class SMSNotification implements NotificationMethod {
     @Override
-    public void play() {
-        System.out.println(name + " is bowling.");
+    public void sendNotification(String message) {
+        System.out.println("Sending SMS notification: " + message);
     }
 }
 
-/*In this example, the CricketMatch class depends on the Player interface rather than
-concrete implementations (Batsman and Bowler). This allows us to easily change or extend 
-player types without modifying the CricketMatch class, 
-thus adhering to the Dependency Inversion Principle.*/
+/**
+ * Demo class demonstrating the usage of a notification system with different notification methods.
+ */
+public class DependencyInversionPrincipleDemo {
+    public static void main(String[] args) {
+        // Create email and SMS notification methods
+        NotificationMethod emailMethod = new EmailNotification();
+        NotificationMethod smsMethod = new SMSNotification();
+
+        // Create a notification system with email and SMS notification methods
+        List<NotificationMethod> methods = new ArrayList<>();
+        methods.add(emailMethod);
+        methods.add(smsMethod);
+        NotificationSystem notificationSystem = new NotificationSystem(methods);
+
+        // Send a notification using all methods
+        notificationSystem.sendNotification("This is a notification message.");
+    }
+}
+
+/**
+ * The DependencyInversionPrincipleDemo class demonstrates the usage of a notification system
+ * with different notification methods. It creates instances of EmailNotification and SMSNotification
+ * and configures the notification system with them. This approach adheres to the Dependency Inversion Principle
+ * by depending on abstractions (NotificationMethod interface) rather than concrete implementations,
+ * promoting code flexibility and maintainability.
+ */
