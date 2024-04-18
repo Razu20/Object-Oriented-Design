@@ -1,0 +1,39 @@
+// Player.java
+public class Player {
+    private String name;
+    private int age;
+
+    public Player(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+}
+
+// Batsman.java
+public class Batsman extends Player {
+    private int runsScored;
+
+    public Batsman(String name, int age, int runsScored) {
+        super(name, age);
+        this.runsScored = runsScored;
+    }
+
+    public int getRunsScored() {
+        return runsScored;
+    }
+}
+/**
+
+In this example, the Player class is open for extension but closed for modification.
+We extend the Player class to create a Batsman class without modifying the existing
+code of the Player class. This allows us to add new functionality (such as keeping
+track of runs scored) without changing the existing code.
+**/
