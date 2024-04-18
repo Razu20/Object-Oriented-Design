@@ -1,132 +1,75 @@
-/**
- * Player.java
- * 
- * Interface representing a player in cricket.
- */
-public interface Player {
-    String getName();
-    int getAge();
-    void play();
+//*************************************************************************
+// Title : Java Program Demonstrating Interface Segregation Principle
+// Author :Razu Sarder, Undergraduate Student, Khulna University
+//*************************************************************************
+
+import java.util.ArrayList;
+import java.util.List;
+
+// Interface representing the ability to fly
+interface Flyable {
+    void fly();
 }
 
-/**
- * Batsman.java
- * 
- * Class representing a batsman player in cricket, implementing the Player interface.
- */
-public class Batsman implements Player {
-    private String name;
-    private int age;
-    private int runsScored;
+// Interface representing the ability to swim
+interface Swimmable {
+    void swim();
+}
 
-    /**
-     * Constructor for Batsman class.
-     * 
-     * @param name       The name of the batsman.
-     * @param age        The age of the batsman.
-     * @param runsScored The runs scored by the batsman.
-     */
-    public Batsman(String name, int age, int runsScored) {
-        this.name = name;
-        this.age = age;
-        this.runsScored = runsScored;
-    }
+// Interface representing the ability to walk
+interface Walkable {
+    void walk();
+}
 
-    /**
-     * Get the name of the batsman.
-     * 
-     * @return The name of the batsman.
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * Get the age of the batsman.
-     * 
-     * @return The age of the batsman.
-     */
-    public int getAge() {
-        return age;
-    }
-
-    /**
-     * Get the runs scored by the batsman.
-     * 
-     * @return The runs scored by the batsman.
-     */
-    public int getRunsScored() {
-        return runsScored;
-    }
-
-    /**
-     * Implementation of the play method for batsman.
-     */
+// Class representing a Bird that can fly and walk
+class Bird implements Flyable, Walkable {
     @Override
-    public void play() {
-        System.out.println(name + " is batting.");
+    public void fly() {
+        System.out.println("Bird is flying.");
+    }
+
+    @Override
+    public void walk() {
+        System.out.println("Bird is walking.");
+    }
+}
+
+// Class representing a Fish that can swim
+class Fish implements Swimmable {
+    @Override
+    public void swim() {
+        System.out.println("Fish is swimming.");
+    }
+}
+
+// Demo class demonstrating the usage of animals and the Interface Segregation Principle
+public class InterfaceSegregationPrincipleDemo {
+    public static void main(String[] args) {
+        // Create a list of animals
+        List<Object> animals = new ArrayList<>();
+        animals.add(new Bird());
+        animals.add(new Fish());
+
+        // Perform actions on each animal
+        for (Object animal : animals) {
+            if (animal instanceof Flyable) {
+                ((Flyable) animal).fly();
+            }
+            if (animal instanceof Swimmable) {
+                ((Swimmable) animal).swim();
+            }
+            if (animal instanceof Walkable) {
+                ((Walkable) animal).walk();
+            }
+            System.out.println();
+        }
     }
 }
 
 /**
- * Bowler.java
- * 
- * Class representing a bowler player in cricket, implementing the Player interface.
- */
-public class Bowler implements Player {
-    private String name;
-    private int age;
-    private int wicketsTaken;
-
-    /**
-     * Constructor for Bowler class.
-     * 
-     * @param name         The name of the bowler.
-     * @param age          The age of the bowler.
-     * @param wicketsTaken The wickets taken by the bowler.
-     */
-    public Bowler(String name, int age, int wicketsTaken) {
-        this.name = name;
-        this.age = age;
-        this.wicketsTaken = wicketsTaken;
-    }
-
-    /**
-     * Get the name of the bowler.
-     * 
-     * @return The name of the bowler.
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * Get the age of the bowler.
-     * 
-     * @return The age of the bowler.
-     */
-    public int getAge() {
-        return age;
-    }
-
-    /**
-     * Get the wickets taken by the bowler.
-     * 
-     * @return The wickets taken by the bowler.
-     */
-    public int getWicketsTaken() {
-        return wicketsTaken;
-    }
-
-    /**
-     * Implementation of the play method for bowler.
-     */
-    @Override
-    public void play() {
-        System.out.println(name + " is bowling.");
-    }
-}
-
-/*In this example, we have segregated the Player interface into smaller interfaces
-(Player and Bowler). Each class implements only the methods it needs, 
-adhering to the Interface Segregation Principle.*/
+ * In the above program, each interface represents a specific behavior
+ * such as flying, swimming, and walking, adhering to the Interface
+ * Segregation Principle. This approach allows classes like Bird and Fish
+ * to implement only the interfaces relevant to their capabilities,
+ * promoting better code organization and maintainability.
+ */   
