@@ -117,3 +117,7 @@ public class Bowler extends Player {
         System.out.println(getName() + " is bowling.");
     }
 }
+
+ *In this example, the Player class is a base class for different types of players in cricket.
+Each subclass (Batsman and Bowler) can be substituted for 
+the Player class without affecting the correctness of the program.*/
